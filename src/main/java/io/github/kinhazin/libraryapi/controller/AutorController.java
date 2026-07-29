@@ -4,7 +4,6 @@ import io.github.kinhazin.libraryapi.controller.dto.AutorDTO;
 import io.github.kinhazin.libraryapi.model.Autor;
 import io.github.kinhazin.libraryapi.service.AutorService;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
