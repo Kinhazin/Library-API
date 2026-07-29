@@ -23,7 +23,7 @@ public class TransacaoService {
 
     @Transactional
     public void executar(){
-        Autor autor = new Autor();
+        Autor autor = Autor.builder().build();
         autor.setNome("Tulio Maravilha");
         autor.setDataNascimento(LocalDate.of(1973,  11, 14));
         autor.setNacionalidade("Brasileiro");
