@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -49,4 +50,12 @@ public class Autor {
 
     @Column(name = "id_usuario")
     private UUID idUsuario;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Autor autor = (Autor) o;
+        return Objects.equals(nome, autor.nome) && Objects.equals(dataNascimento, autor.dataNascimento) && Objects.equals(nacionalidade, autor.nacionalidade);
+    }
+
 }

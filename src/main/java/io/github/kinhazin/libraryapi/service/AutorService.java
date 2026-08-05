@@ -1,22 +1,31 @@
 package io.github.kinhazin.libraryapi.service;
 
 import io.github.kinhazin.libraryapi.controller.dto.AutorDTO;
+import io.github.kinhazin.libraryapi.exceptions.InvalidOperationException;
 import io.github.kinhazin.libraryapi.exceptions.NotFoundException;
 import io.github.kinhazin.libraryapi.model.Autor;
 import io.github.kinhazin.libraryapi.repository.AutorRepository;
-import lombok.AllArgsConstructor;
+import io.github.kinhazin.libraryapi.repository.LivroRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AutorService {
     private final AutorRepository autorRepository;
+    private final AutorValidator autorValidator;
+    private final LivroRepository livroRepository;
 
-    public Autor salvar(Autor autor){
-        return autorRepository.save(autor);
+    public Autor salvar(AutorDTO newAutor){
+        autorValidator.validarExists(newAutor);
+        autorValidator.validarParametros(newAutor);
+
+        Autor autor = newAutor.toAutor();
+        autorRepository.save(autor);
+        return autor;
     }
 
     public Autor buscaId(UUID id){
@@ -25,6 +34,8 @@ public class AutorService {
 
     public void deleteId(UUID id) {
             Autor autor = autorRepository.findById(id).orElseThrow(() -> new NotFoundException("Autor", id.toString()));
+            if(!livroRepository.findByAutorId(autor.getId()).isEmpty()) throw new InvalidOperationException("Não é permetido excluir um autor com livro cadastrado");
+
             autorRepository.delete(autor);
     }
 
@@ -37,10 +48,11 @@ public class AutorService {
 
     public void atualizar(UUID id, AutorDTO autorDTO){
         Autor autor = autorRepository.findById(id).orElseThrow(() -> new NotFoundException("Autor", id.toString()));
+        autorValidator.validarParametros(autorDTO);
 
-        if(autorDTO.nome()!= null) autor.setNome(autorDTO.nome());
-        if(autorDTO.nacionalidade()!= null) autor.setNacionalidade(autorDTO.nacionalidade());
-        if(autorDTO.dataNascimento()!= null) autor.setDataNascimento(autorDTO.dataNascimento());
+        autor.setNome(autorDTO.nome());
+        autor.setNacionalidade(autorDTO.nacionalidade());
+        autor.setDataNascimento(autorDTO.dataNascimento());
         autorRepository.save(autor);
     }
 

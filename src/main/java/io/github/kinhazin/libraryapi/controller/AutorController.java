@@ -3,7 +3,7 @@ package io.github.kinhazin.libraryapi.controller;
 import io.github.kinhazin.libraryapi.controller.dto.AutorDTO;
 import io.github.kinhazin.libraryapi.model.Autor;
 import io.github.kinhazin.libraryapi.service.AutorService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,15 +15,15 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("autores")
-@AllArgsConstructor
+@RequiredArgsConstructor
+
 //http://localhost:8080/autores
 public class AutorController {
     private final AutorService service;
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody AutorDTO autorDto){
-        Autor autor = autorDto.toAutor();
-        service.salvar(autor);
+        Autor autor = service.salvar(autorDto);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -47,11 +47,11 @@ public class AutorController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<AutorDTO>> getAutors(
-            @RequestParam(value = "nome", required = false) String nome,
-            @RequestParam(value = "nacionalidade", required = false) String nacionalidade){
-            List<AutorDTO> lista =  service.getAutors(nome, nacionalidade).stream().map(a -> new AutorDTO(a)).collect(Collectors.toList());
-            return ResponseEntity.ok(lista);
+    public ResponseEntity<List<AutorDTO>> getAutors( @RequestParam(value = "nome", required = false) String nome,
+                                                     @RequestParam(value = "nacionalidade", required = false) String nacionalidade){
+
+        List<AutorDTO> lista =  service.getAutors(nome, nacionalidade).stream().map(AutorDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok(lista);
     }
 
     @PutMapping("/{id}")
