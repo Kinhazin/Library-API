@@ -3,6 +3,7 @@ package io.github.kinhazin.libraryapi.controller;
 import io.github.kinhazin.libraryapi.controller.dto.AutorDTO;
 import io.github.kinhazin.libraryapi.model.Autor;
 import io.github.kinhazin.libraryapi.service.AutorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class AutorController {
     private final AutorService service;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody AutorDTO autorDto){
+    public ResponseEntity<Void> save(@RequestBody @Valid AutorDTO autorDto){
         Autor autor = service.salvar(autorDto);
 
         URI location = ServletUriComponentsBuilder
@@ -55,7 +56,7 @@ public class AutorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizar(@PathVariable("id") UUID id, @RequestBody AutorDTO autorAtualizado){
+    public ResponseEntity<Void> atualizar(@Valid @PathVariable("id") UUID id, @RequestBody AutorDTO autorAtualizado){
        service.atualizar(id, autorAtualizado);
        return ResponseEntity.noContent().build();
     }

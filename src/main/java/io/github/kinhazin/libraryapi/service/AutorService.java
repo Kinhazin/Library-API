@@ -7,6 +7,8 @@ import io.github.kinhazin.libraryapi.model.Autor;
 import io.github.kinhazin.libraryapi.repository.AutorRepository;
 import io.github.kinhazin.libraryapi.repository.LivroRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +23,6 @@ public class AutorService {
 
     public Autor salvar(AutorDTO newAutor){
         autorValidator.validarExists(newAutor);
-        autorValidator.validarParametros(newAutor);
 
         Autor autor = newAutor.toAutor();
         autorRepository.save(autor);
@@ -40,15 +41,22 @@ public class AutorService {
     }
 
     public List<Autor> getAutors(String nome, String nacionalidade){
-        if(nome != null && nacionalidade != null) return autorRepository.findByNomeAndNacionalidade(nome, nacionalidade);
-        if(nome != null) return autorRepository.findByNome(nome);
-        if(nacionalidade != null) return autorRepository.findByNacionalidade(nacionalidade);
-        return autorRepository.findAll();
+        Autor autor = new Autor();
+        autor.setNome(nome);
+        autor.setNacionalidade(nacionalidade);
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreNullValues()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example<Autor> autorExample = Example.of(autor, matcher);
+        return autorRepository.findAll(autorExample);
     }
 
     public void atualizar(UUID id, AutorDTO autorDTO){
         Autor autor = autorRepository.findById(id).orElseThrow(() -> new NotFoundException("Autor", id.toString()));
-        autorValidator.validarParametros(autorDTO);
 
         autor.setNome(autorDTO.nome());
         autor.setNacionalidade(autorDTO.nacionalidade());

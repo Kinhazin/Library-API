@@ -1,7 +1,15 @@
 package io.github.kinhazin.libraryapi.exceptions;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class NotFoundException extends RuntimeException {
-    public NotFoundException(String recurso, String id){
-        super("O %s de id %s não foi localizado".formatted(recurso, id));
+    private String recurso;
+    private String id;
+
+    public String getError(){
+        return "O %s de Id: %s não está cadastrado".formatted(recurso, id);
     }
 }

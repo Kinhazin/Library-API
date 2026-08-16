@@ -1,7 +1,10 @@
 package io.github.kinhazin.libraryapi.exceptions;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class InvalidOperationException extends RuntimeException{
-    public InvalidOperationException(String message) {
-        super(message);
-    }
+    String message;
 }

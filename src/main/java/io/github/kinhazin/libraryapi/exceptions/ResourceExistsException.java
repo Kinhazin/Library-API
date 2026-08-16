@@ -1,8 +1,17 @@
 package io.github.kinhazin.libraryapi.exceptions;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class ResourceExistsException extends RuntimeException{
-    public ResourceExistsException(String resource, String id){
-        super("O %s de Id %s já existe".formatted(resource, id));
+    private String resource;
+    private String id;
+
+    public String getError(){
+        return "%s de id: %s já cadastrado".formatted(resource, id);
     }
+
 
 }
