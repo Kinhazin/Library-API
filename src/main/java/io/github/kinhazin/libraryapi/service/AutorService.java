@@ -6,6 +6,7 @@ import io.github.kinhazin.libraryapi.exceptions.NotFoundException;
 import io.github.kinhazin.libraryapi.model.Autor;
 import io.github.kinhazin.libraryapi.repository.AutorRepository;
 import io.github.kinhazin.libraryapi.repository.LivroRepository;
+import io.github.kinhazin.libraryapi.validator.AutorValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -21,10 +22,8 @@ public class AutorService {
     private final AutorValidator autorValidator;
     private final LivroRepository livroRepository;
 
-    public Autor salvar(AutorDTO newAutor){
-        autorValidator.validarExists(newAutor);
-
-        Autor autor = newAutor.toAutor();
+    public Autor salvar(Autor autor){
+        autorValidator.validarExists(autor);
         autorRepository.save(autor);
         return autor;
     }

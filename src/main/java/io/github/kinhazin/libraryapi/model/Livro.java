@@ -4,9 +4,12 @@ import io.github.kinhazin.libraryapi.model.enums.GeneroLivros;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -41,5 +44,16 @@ public class Livro {
             ) // Atores podem ter 1 ou mais livros, mas livros só podem ter 1 autor
     @JoinColumn(name = "id_autor") // fazendo a relação entre livros e autor
     private Autor autor;
+
+    @CreatedDate
+    @Column(name = "data_cadastro")
+    private LocalDateTime dataCadastro;
+
+    @LastModifiedDate
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao;
+
+    @Column(name = "id_usuario")
+    private UUID idUsuario;
 
 }

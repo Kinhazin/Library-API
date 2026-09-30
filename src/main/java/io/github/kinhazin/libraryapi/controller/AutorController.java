@@ -1,6 +1,7 @@
 package io.github.kinhazin.libraryapi.controller;
 
 import io.github.kinhazin.libraryapi.controller.dto.AutorDTO;
+import io.github.kinhazin.libraryapi.controller.mappers.AutorMapper;
 import io.github.kinhazin.libraryapi.model.Autor;
 import io.github.kinhazin.libraryapi.service.AutorService;
 import jakarta.validation.Valid;
@@ -21,10 +22,11 @@ import java.util.stream.Collectors;
 //http://localhost:8080/autores
 public class AutorController {
     private final AutorService service;
-
+    private final AutorMapper mapper;
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody @Valid AutorDTO autorDto){
-        Autor autor = service.salvar(autorDto);
+        Autor autor = mapper.toEntity(autorDto);
+        autor = service.salvar(autor);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -51,7 +53,7 @@ public class AutorController {
     public ResponseEntity<List<AutorDTO>> getAutors( @RequestParam(value = "nome", required = false) String nome,
                                                      @RequestParam(value = "nacionalidade", required = false) String nacionalidade){
 
-        List<AutorDTO> lista =  service.getAutors(nome, nacionalidade).stream().map(AutorDTO::new).collect(Collectors.toList());
+        List<AutorDTO> lista =  service.getAutors(nome, nacionalidade).stream().map(mapper::toDto).collect(Collectors.toList());
         return ResponseEntity.ok(lista);
     }
 
