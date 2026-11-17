@@ -4,7 +4,6 @@ import io.github.kinhazin.libraryapi.model.enums.GeneroLivros;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 public record PesquisaLivroDTO(
         String isbn,
@@ -12,7 +11,6 @@ public record PesquisaLivroDTO(
         LocalDate dataPublicacao,
         GeneroLivros genero,
         BigDecimal preco,
-        UUID idAutor,
-        AutorDTO autorDto
+        AutorDTO autor
 ) {
 }

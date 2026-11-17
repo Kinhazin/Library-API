@@ -1,4 +1,4 @@
-package io.github.kinhazin.libraryapi.controller;
+package io.github.kinhazin.libraryapi.controller.utils;
 
 import io.github.kinhazin.libraryapi.exceptions.dto.ErrorResponseDto;
 import io.github.kinhazin.libraryapi.exceptions.*;

@@ -2,13 +2,13 @@ package io.github.kinhazin.libraryapi.controller;
 
 import io.github.kinhazin.libraryapi.controller.dto.AutorDTO;
 import io.github.kinhazin.libraryapi.controller.mappers.AutorMapper;
+import io.github.kinhazin.libraryapi.controller.utils.GenericController;
 import io.github.kinhazin.libraryapi.model.Autor;
 import io.github.kinhazin.libraryapi.service.AutorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -20,20 +20,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 
 //http://localhost:8080/autores
-public class AutorController {
+public class AutorController implements GenericController {
     private final AutorService service;
     private final AutorMapper mapper;
+
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody @Valid AutorDTO autorDto){
         Autor autor = mapper.toEntity(autorDto);
         autor = service.salvar(autor);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(autor.getId())
-                .toUri();
-
+        URI location = gerarHeadLocation(autor.getId());
         return ResponseEntity.created(location).build();
     }
 

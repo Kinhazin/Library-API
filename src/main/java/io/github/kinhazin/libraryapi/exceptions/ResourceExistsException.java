@@ -10,7 +10,7 @@ public class ResourceExistsException extends RuntimeException{
     private String id;
 
     public String getError(){
-        return "%s de id: %s já cadastrado".formatted(resource, id);
+        return "%s %s já está cadastrado".formatted(resource, id);
     }
 
 

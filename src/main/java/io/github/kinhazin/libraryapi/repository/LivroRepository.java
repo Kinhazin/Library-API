@@ -5,15 +5,17 @@ import io.github.kinhazin.libraryapi.model.Livro;
 import io.github.kinhazin.libraryapi.model.enums.GeneroLivros;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface LivroRepository extends JpaRepository<Livro, UUID> {
+public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecificationExecutor<Livro> {
     //Querry method
     List<Livro> findByAutorId(UUID id);
     List<Livro> findByTitulo(String titulo);
@@ -37,5 +39,6 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     @Query("Delete from Livro where genero =:genero")
     void deleteByGenero(@Param("genero") GeneroLivros genero);
 
+    Optional<Livro> findByIsbn(String isbn);
 
 }

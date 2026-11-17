@@ -18,7 +18,7 @@ public class AutorValidator {
                 autor.getNome(),
                 autor.getNacionalidade(),
                 autor.getDataNascimento());
-        if(!autorExists.isEmpty()) throw new ResourceExistsException("Autor", autorExists.getFirst().getId().toString());
+        if(!autorExists.isEmpty()) throw new ResourceExistsException("Autor de id: ", autorExists.getFirst().getId().toString());
     }
 
 
