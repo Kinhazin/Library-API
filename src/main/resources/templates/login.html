@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="htpp://www.thymeleaf.org">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lúmen | Entrar</title>
+<style>
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        margin: 0;
+        background: #0a0b10;
+        color: #f4f1ed;
+        font: 1rem "DM Sans", Arial, sans-serif
+    }
+
+    main {
+        min-height: 100svh;
+        display: grid;
+        grid-template-columns:1.04fr 1fr;
+        padding: 18px
+    }
+
+    .art {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        min-height: 650px;
+        border: 1px solid #363039;
+        border-radius: 18px;
+        background: radial-gradient(ellipse at 38% 55%, #542a32 0, #271b27 36%, #12131c 70%)
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.65rem;
+        letter-spacing: -1.6px;
+        font-weight: bold
+    }
+
+    .art > .brand {
+        position: absolute;
+        top: 32px;
+        left: 34px
+    }
+
+    .mark {
+        width: 28px;
+        height: 28px;
+        background: currentColor;
+        clip-path: polygon(50% 0, 59% 36%, 85% 15%, 65% 42%, 100% 50%, 65% 58%, 85% 85%, 58% 65%, 50% 100%, 42% 65%, 15% 85%, 35% 58%, 0 50%, 35% 42%, 15% 15%, 42% 35%);
+        color: #ff9b63
+    }
+
+    .space {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1
+    }
+
+    .art h2 {
+        position: absolute;
+        left: 7%;
+        bottom: 5%;
+        font: normal clamp(2.6rem, 5.2vw, 5.6rem)/.94 Georgia, serif;
+        letter-spacing: -.065em;
+        margin: 0
+    }
+
+    .art em {
+        color: #ffb58c
+    }
+
+    .access {
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        padding: 50px 8%
+    }
+
+    .box {
+        width: min(100%, 380px)
+    }
+
+    .smallbrand {
+        display: none
+    }
+
+    h1 {
+        font: normal clamp(3rem, 4.3vw, 4.8rem)/1.05 Georgia, serif;
+        letter-spacing: -.065em;
+        margin: 0 0 12px
+    }
+
+    .intro {
+        color: #aaa9b3;
+        margin: 0 0 38px;
+        line-height: 1.55
+    }
+
+    label {
+        display: block;
+        font-size: .9rem;
+        margin: 22px 0 9px
+    }
+
+    .field {
+        display: flex;
+        align-items: center;
+        border: 1px solid #383942;
+        border-radius: 9px;
+        background: #15161d;
+        padding: 0 14px;
+        gap: 11px;
+        color: #9797a6
+    }
+
+    .field:focus-within {
+        outline: 2px solid #ffaf83;
+        outline-offset: 2px
+    }
+
+    input {
+        background: transparent;
+        border: 0;
+        color: #fff;
+        font: inherit;
+        width: 100%;
+        min-width: 0;
+        height: 52px;
+        outline: none
+    }
+
+    input::placeholder {
+        color: #95949f
+    }
+
+    .icon {
+        width: 18px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.6;
+        flex: none
+    }
+
+    .eye {
+        display: grid;
+        place-items: center;
+        background: none;
+        color: #b7b5bf;
+        border: 0;
+        cursor: pointer;
+        min-height: 44px;
+        min-width: 36px
+    }
+
+    .enter {
+        width: 100%;
+        border: 0;
+        background: #ffac7d;
+        border-radius: 9px;
+        color: #251610;
+        margin-top: 26px;
+        padding: 16px;
+        font: 600 1rem inherit;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 650;
+        cursor: pointer
+    }
+
+    .enter:hover {
+        background: #ffbe99
+    }
+
+    button:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 4px
+    }
+
+    .note {
+        color: #aaa9b3;
+        font-size: .8rem;
+        line-height: 1.6;
+        margin-top: 20px
+    }
+
+    .reply {
+        color: #ffc6a7;
+        line-height: 1.5
+    }
+
+    .reply:empty {
+        display: none
+    }
+
+    @media (max-width: 750px) {
+        main {
+            display: block;
+            padding: 12px
+        }
+
+        .art {
+            min-height: 215px;
+            height: 27svh
+        }
+
+        .art > .brand {
+            top: 18px;
+            left: 20px;
+            font-size: 1.35rem
+        }
+
+        .art h2 {
+            font-size: 2.3rem;
+            left: 20px;
+            bottom: 18px
+        }
+
+        .access {
+            padding: 38px 18px
+        }
+
+        .intro {
+            margin-bottom: 24px
+        }
+
+        .space {
+            width: 70%;
+            left: 32%
+        }
+    }
+</style>
+<main>
+    <section class="art" aria-label="Lúmen">
+        <div class="brand"><i class="mark"></i>Lúmen</div>
+        <canvas class="space" aria-hidden="true"></canvas>
+        <h2>Seu espaço<br><em>no universo.</em></h2></section>
+    <section class="access">
+        <div class="box"><h1>Boas-vindas.</h1>
+            <p class="intro">Entre com seu usuário e senha para continuar.</p>
+            <form method="post" th:action="@{/login}"><label for="username">Username</label>
+                <div class="field">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="2" y="5" width="20" height="14" rx="3"/>
+                        <path d="m3 7 9 6 9-6"/>
+                    </svg>
+                    <input id="username" type="text" autocomplete="username" name="username" placeholder="user" required/>
+                </div>
+                <label for="password">Senha</label>
+                <div class="field">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="4" y="10" width="16" height="11" rx="3"/>
+                        <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                    </svg>
+                    <input id="password" type="password" name="password" autocomplete="current-password" placeholder="Digite sua senha"
+                           required>
+                    <button class="eye" type="button" aria-label="Mostrar senha" aria-pressed="false">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+                <button type="submit" class="enter">Entrar</button>
+                <p class="note">Página de demonstração. Use dados fictícios.</p>
+                <p class="reply" role="status"></p></form>
+        </div>
+    </section>
+</main>
+<script>
+    const eye = document.querySelector('.eye'), password = document.querySelector('#senha');
+    eye.onclick = () => {
+        const show = password.type === 'password';
+        password.type = show ? 'text' : 'password';
+        eye.setAttribute('aria-pressed', show);
+        eye.setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha')
+    };
+
+    const canvas = document.querySelector('canvas');
+
+    function illustrate() {
+        const w = canvas.clientWidth, h = canvas.clientHeight, d = Math.min(devicePixelRatio, 2);
+        canvas.width = w * d;
+        canvas.height = h * d;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(d, d);
+        let seed = 123;
+
+        function rand() {
+            seed = (1664525 * seed + 1013904223) >>> 0;
+            return seed / 4294967296
+        }
+
+        for (let i = 0; i < 400; i++) {
+            ctx.fillStyle = 'rgba(255,226,207,' + (0.15 + rand() * .6) + ')';
+            ctx.fillRect(rand() * w, rand() * h, rand() * 1.5 + .4, 1)
+        }
+        ctx.translate(w * .53, h * .47);
+        const r = Math.min(w * .29, h * .22);
+        ctx.rotate(-.35);
+
+        function ring(n, front) {
+            ctx.beginPath();
+            ctx.ellipse(0, 0, r * (1.58 + n * .025), r * (.36 + n * .009), 0, front ? 0 : Math.PI, front ? Math.PI : 2 * Math.PI);
+            ctx.strokeStyle = 'rgba(255,193,158,' + (.24 + n % 4 * .12) + ')';
+            ctx.lineWidth = n % 5 === 0 ? 1.4 : .55;
+            ctx.stroke()
+        }
+
+        for (let n = 0; n < 18; n++) ring(n, false);
+        const g = ctx.createRadialGradient(-r * .51, -r * .72, 0, r * .1, r * .11, r * 1.33);
+        g.addColorStop(0, '#ffe2ac');
+        g.addColorStop(.27, '#ffa16e');
+        g.addColorStop(.55, '#d96753');
+        g.addColorStop(.78, '#793a41');
+        g.addColorStop(1, '#221821');
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.fillStyle = g;
+        ctx.fillRect(-r, -r, 2 * r, 2 * r);
+        for (let n = 0; n < 170; n++) {
+            const y = rand() * 2 * r - r;
+            ctx.strokeStyle = 'rgba(79,33,42,' + (rand() * .12) + ')';
+            ctx.lineWidth = rand() * r * .035;
+            ctx.beginPath();
+            ctx.moveTo(-r, y);
+            ctx.bezierCurveTo(-r * .4, y + r * .14, r * .25, y - r * .08, r, y + r * .04);
+            ctx.stroke()
+        }
+        for (let n = 0; n < 18000; n++) {
+            ctx.fillStyle = rand() > .5 ? '#ffffff18' : '#2010211c';
+            ctx.fillRect(rand() * 2 * r - r, rand() * 2 * r - r, 1, 1)
+        }
+        ctx.restore();
+        for (let n = 0; n < 18; n++) ring(n, true)
+    }
+
+    new ResizeObserver(illustrate).observe(canvas);
+</script>
+</html>
